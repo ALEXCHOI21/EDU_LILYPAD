@@ -9,6 +9,17 @@ const Modal = ({ isOpen, onClose, content }) => {
   const renderTheory = (text) => {
     if (!text) return null;
     return text.split('\n').map((line, idx) => {
+      // Image support: ![alt](url)
+      const imgMatch = line.match(/!\[(.*?)\]\((.*?)\)/);
+      if (imgMatch) {
+        return (
+          <div key={idx} className="theory-img-container">
+            <img src={imgMatch[2]} alt={imgMatch[1]} className="theory-img" />
+            {imgMatch[1] && <span className="img-caption">{imgMatch[1]}</span>}
+          </div>
+        );
+      }
+      
       if (line.startsWith('###')) {
         return <h3 key={idx}>{line.replace('###', '').trim()}</h3>;
       } else if (line.startsWith('-')) {

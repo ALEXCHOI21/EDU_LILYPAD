@@ -387,6 +387,32 @@ footer {
   border-radius: 2px;
 }
 
+.img-caption {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.theory-img-container {
+  margin: 1.5rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
+
+.theory-img {
+  width: 100%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.theory-img:hover {
+  transform: scale(1.02);
+}
+
 @media (max-width: 768px) {
   h1 { font-size: 3rem; }
   .curriculum-grid { padding: 2rem 5%; }
