@@ -61,21 +61,36 @@ const Modal = ({ isOpen, onClose, content }) => {
           </div>
           
           <div style={{ flex: 1, paddingLeft: '2rem', borderLeft: '1px solid var(--glass-border)' }}>
-            <h4 style={{ marginBottom: '1rem', color: 'var(--accent-glow)' }}>관련 리소스</h4>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {content.newsUrl && (
-                <li>
+            <h4 style={{ marginBottom: '1.5rem', color: 'var(--accent-glow)', fontSize: '0.9rem', textTransform: 'uppercase' }}>관련 리소스</h4>
+            
+            {content.links ? (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {content.links.map((link, idx) => (
                   <a 
-                    href={content.newsUrl} 
+                    key={idx}
+                    href={link.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="cta"
-                    style={{ fontSize: '0.8rem', display: 'block', textAlign: 'center', textDecoration: 'none' }}
+                    className="resource-card"
                   >
-                    최신 뉴스/사이트 방문
+                    <h5>{link.title}</h5>
+                    <p>{link.summary}</p>
                   </a>
-                </li>
-              )}
+                ))}
+              </div>
+            ) : content.newsUrl && (
+              <a 
+                href={content.newsUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="cta"
+                style={{ fontSize: '0.8rem', display: 'block', textAlign: 'center', textDecoration: 'none', marginBottom: '1.5rem' }}
+              >
+                최신 뉴스/사이트 방문
+              </a>
+            )}
+
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <li>
                 <button 
                   className="cta" 

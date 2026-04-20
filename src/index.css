@@ -320,6 +320,36 @@ footer {
   margin-top: 2rem;
 }
 
+.resource-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-decoration: none;
+  display: block;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.resource-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-glow);
+  transform: translateX(5px);
+}
+
+.resource-card h5 {
+  color: var(--accent-glow);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.resource-card p {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
 .theory-box h3 {
   color: var(--accent-glow);
   font-family: var(--font-display);
