@@ -177,7 +177,6 @@ const App = () => {
         <div className="curriculum-grid">
           {curriculumData.map((day) => (
             <div key={day.day} className="glass-card day-card">
-              <span className="day-badge">Day {day.day}</span>
               <h3>{day.title}</h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
                 {day.description}
