@@ -1,13 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@300;400;600;800&display=swap');
 
 :root {
-  --bg-color: #0a0a0c;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --accent-glow: #00f2fe;
-  --accent-purple: #bf77ff;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a8;
+  --bg-color: #fcfcfd;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --accent-glow: #00b4d8;
+  --accent-purple: #9b51e0;
+  --text-primary: #1a1a1c;
+  --text-secondary: #505058;
   --font-main: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
 }
@@ -28,8 +28,8 @@ body {
 
 .app-container {
   min-height: 100vh;
-  background: radial-gradient(circle at 50% 0%, rgba(79, 172, 254, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 100% 100%, rgba(142, 45, 226, 0.05) 0%, transparent 40%);
+  background: radial-gradient(circle at 50% 0%, rgba(0, 180, 216, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 100% 100%, rgba(155, 81, 224, 0.03) 0%, transparent 40%);
 }
 
 header {
@@ -52,22 +52,24 @@ header {
   object-fit: cover;
   opacity: 0.4;
   z-index: -1;
-  filter: grayscale(20%) brightness(0.6);
+  filter: grayscale(10%) brightness(0.95);
 }
 
 .glass-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   padding: 2rem;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(0, 242, 254, 0.3);
+  border-color: rgba(0, 180, 216, 0.2);
   transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 180, 216, 0.1);
 }
 
 h1 {
@@ -75,7 +77,7 @@ h1 {
   font-size: 4.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  background: linear-gradient(to right, #ffffff, #8e9eab);
+  background: linear-gradient(135deg, #1a1a1c 0%, #4a4a4c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.02em;
@@ -115,7 +117,7 @@ h1 {
 
 .item-list li {
   padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   color: var(--text-secondary);
@@ -144,8 +146,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   z-index: 100;
-  background: rgba(10, 10, 12, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(252, 252, 253, 0.85);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--glass-border);
 }
 
@@ -232,7 +234,7 @@ footer {
 }
 
 .modal-content {
-  background: rgba(20, 20, 25, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   border: 1px solid var(--glass-border);
   border-radius: 32px;
   width: 90%;
@@ -241,7 +243,7 @@ footer {
   overflow-y: auto;
   padding: 3rem;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.15);
 }
 
 .video-container {
@@ -268,9 +270,9 @@ footer {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   border: none;
-  color: white;
+  color: var(--text-primary);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -370,7 +372,7 @@ footer {
 .summary-heading {
   font-family: var(--font-display);
   font-weight: 800;
-  color: white;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;

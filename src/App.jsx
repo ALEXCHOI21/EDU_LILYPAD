@@ -83,6 +83,7 @@ const Modal = ({ isOpen, onClose, content }) => {
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="resource-card"
+                    download={link.url.includes('.') && !link.url.startsWith('http') ? true : undefined}
                   >
                     <h5>{link.title}</h5>
                     <p>{link.summary}</p>
@@ -226,7 +227,7 @@ const App = () => {
               <img 
                 src="/ai_concept.png" 
                 alt="AI Fashion" 
-                style={{ width: '100%', borderRadius: '16px', filter: 'brightness(0.8)' }} 
+                style={{ width: '100%', borderRadius: '16px', filter: 'brightness(1.05)' }} 
               />
             </div>
           </div>
