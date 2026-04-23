@@ -253,6 +253,47 @@ const App = () => {
             실시간 Q&A 세션 중에 활성화되는 창구입니다. 현장에서 강사님께 질문해 주세요.
           </div>
         </section>
+
+        <section id="reviews" style={{ padding: '6rem 10%', background: 'rgba(0, 180, 216, 0.02)' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span className="day-badge">Testimonials</span>
+            <h2 style={{ fontSize: '3rem', fontFamily: 'var(--font-display)', marginTop: '1rem' }}>Student Reviews</h2>
+            <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>릴리패드 패션디자인 x AI 과정을 거쳐간 선배들의 생생한 후기를 확인하세요.</p>
+          </div>
+
+          <div className="curriculum-grid" style={{ padding: 0 }}>
+            <div className="glass-card review-card">
+              <div className="quote-icon">"</div>
+              <p className="review-text">패션 디자인과 AI의 결합이 이렇게 흥미로울 줄 몰랐어요! 릴리패드로 직접 옷을 빛나게 하는 경험이 정말 환상적이었습니다.</p>
+              <div className="review-author">
+                <strong>김민지</strong>
+                <span>패션디자인 전공 학생</span>
+              </div>
+            </div>
+            <div className="glass-card review-card">
+              <div className="quote-icon">"</div>
+              <p className="review-text">제미나이와 NotebookLM을 활용해 기획안을 짜는 법을 배우고 나서 작업 속도가 비약적으로 빨라졌습니다. 혁신적인 수업이에요.</p>
+              <div className="review-author">
+                <strong>이정훈</strong>
+                <span>프리랜서 디자이너</span>
+              </div>
+            </div>
+            <div className="glass-card review-card">
+              <div className="quote-icon">"</div>
+              <p className="review-text">바느질로 회로를 만드는 릴리패드, 세탁까지 가능하다니 놀랍습니다. 기술을 예술로 승화시키는 법을 제대로 배웠습니다.</p>
+              <div className="review-author">
+                <strong>박서연</strong>
+                <span>디자인 스튜디오 실장</span>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'center', marginTop: '4rem' }}>
+            <a href="https://forms.gle/gTxc4dicnxC5Ly2u5" target="_blank" rel="noopener noreferrer" className="cta">
+              나의 수강후기 작성하기
+            </a>
+          </div>
+        </section>
       </main>
 
       <Modal 
