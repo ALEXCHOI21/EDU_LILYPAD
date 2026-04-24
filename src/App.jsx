@@ -138,6 +138,14 @@ const App = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [newPost, setNewPost] = useState({ name: '', content: '', category: '일반' });
 
+  // Chat States
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([
+    { role: 'bot', text: '안녕하세요! 릴리패드 패션디자인 x AI 전문 튜터입니다. 무엇을 도와드릴까요?' }
+  ]);
+  const [chatInput, setChatInput] = useState('');
+  const [isChatLoading, setIsChatLoading] = useState(false);
+
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwP_bUWYpBLz2_iq01IvMGVGDcGDRwvPM_HXyb994uRyxuRdFM7e9b9c6nc29IVlEvKrA/exec";
 
   const fetchPosts = async () => {
@@ -177,6 +185,31 @@ const App = () => {
       alert("전송 중 오류가 발생했습니다.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleChatSubmit = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim() || isChatLoading) return;
+
+    const userMessage = { role: 'user', text: chatInput };
+    setChatMessages(prev => [...prev, userMessage]);
+    setChatInput('');
+    setIsChatLoading(true);
+
+    try {
+      const response = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'chat', question: chatInput })
+      });
+      const data = await response.json();
+      setChatMessages(prev => [...prev, { role: 'bot', text: data.reply }]);
+    } catch (error) {
+      console.error("Chat error:", error);
+      setChatMessages(prev => [...prev, { role: 'bot', text: "죄송합니다. 현재 AI 서버와 통신이 원활하지 않습니다." }]);
+    } finally {
+      setIsChatLoading(false);
     }
   };
 
@@ -408,6 +441,43 @@ const App = () => {
         onClose={closeModal} 
         content={selectedItem} 
       />
+
+      {/* AI Chat Widget */}
+      <div className={`chat-widget ${isChatOpen ? 'open' : ''}`}>
+        <button className="chat-bubble" onClick={() => setIsChatOpen(!isChatOpen)}>
+          {isChatOpen ? '×' : 'AI'}
+        </button>
+        
+        {isChatOpen && (
+          <div className="chat-window glass-card">
+            <div className="chat-header">
+              <h4>LilyPad AI Tutor</h4>
+              <span>Online</span>
+            </div>
+            <div className="chat-messages">
+              {chatMessages.map((msg, idx) => (
+                <div key={idx} className={`message ${msg.role}`}>
+                  <div className="message-content">{msg.text}</div>
+                </div>
+              ))}
+              {isChatLoading && (
+                <div className="message bot typing">
+                  <div className="message-content">AI가 생각 중입니다...</div>
+                </div>
+              )}
+            </div>
+            <form className="chat-input" onSubmit={handleChatSubmit}>
+              <input 
+                type="text" 
+                value={chatInput} 
+                onChange={e => setChatInput(e.target.value)} 
+                placeholder="질문을 입력하세요..." 
+              />
+              <button type="submit" disabled={isChatLoading}>전송</button>
+            </form>
+          </div>
+        )}
+      </div>
 
       <footer>
         <p>© 2026 ChoiGPT Corp. LilyPad Fashion Design x AI Education Platform.</p>
