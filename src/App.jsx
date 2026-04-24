@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.css';
 import { curriculumData } from './data/curriculum';
 
@@ -130,6 +130,55 @@ const Modal = ({ isOpen, onClose, content }) => {
 const App = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Board States
+  const [posts, setPosts] = useState([]);
+  const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newPost, setNewPost] = useState({ name: '', content: '', category: '일반' });
+
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwP_bUWYpBLz2_iq01IvMGVGDcGDRwvPM_HXyb994uRyxuRdFM7e9b9c6nc29IVlEvKrA/exec";
+
+  const fetchPosts = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(SCRIPT_URL);
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const handleBoardSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPost)
+      });
+      // no-cors mode won't allow reading the response, so we just assume success
+      setNewPost({ name: '', content: '', category: '일반' });
+      setIsBoardModalOpen(false);
+      // Wait a bit for Google Sheet to sync then re-fetch
+      setTimeout(fetchPosts, 2000);
+    } catch (error) {
+      console.error("Error submitting post:", error);
+      alert("전송 중 오류가 발생했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -249,10 +298,81 @@ const App = () => {
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>교육 과정 및 기타 일반 문의</p>
             </div>
           </div>
-          <div className="qa-placeholder">
-            실시간 Q&A 세션 중에 활성화되는 창구입니다. 현장에서 강사님께 질문해 주세요.
+          
+          {/* Real-time Community Board */}
+          <div className="board-container" style={{ marginTop: '4rem' }}>
+            <div className="board-header">
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem' }}>Community Board</h3>
+              <button className="cta" onClick={() => setIsBoardModalOpen(true)}>글쓰기</button>
+            </div>
+
+            <div className="posts-grid">
+              {posts.length > 0 ? (
+                posts.map((post, index) => (
+                  <div key={index} className="glass-card post-card">
+                    <div className="post-meta">
+                      <span className="post-author">{post.name}</span>
+                      <span className="post-date">{new Date(post.timestamp).toLocaleDateString()}</span>
+                    </div>
+                    <p className="post-content">{post.content}</p>
+                    <div className="post-category">{post.category}</div>
+                  </div>
+                ))
+              ) : (
+                <div className="qa-placeholder">
+                  {isLoading ? "데이터를 불러오는 중입니다..." : "아직 게시글이 없습니다. 첫 번째 주인공이 되어보세요!"}
+                </div>
+              )}
+            </div>
           </div>
         </section>
+
+        {/* Board Write Modal */}
+        {isBoardModalOpen && (
+          <div className="modal-overlay" onClick={() => setIsBoardModalOpen(false)}>
+            <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '600px' }}>
+              <button className="close-btn" onClick={() => setIsBoardModalOpen(false)}>×</button>
+              <h2 style={{ marginBottom: '2rem', fontFamily: 'var(--font-display)' }}>새 게시글 작성</h2>
+              <form onSubmit={handleBoardSubmit}>
+                <div className="form-group">
+                  <label>이름</label>
+                  <input 
+                    type="text" 
+                    value={newPost.name} 
+                    onChange={e => setNewPost({...newPost, name: e.target.value})} 
+                    required 
+                    placeholder="이름을 입력하세요"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>카테고리</label>
+                  <select 
+                    value={newPost.category} 
+                    onChange={e => setNewPost({...newPost, category: e.target.value})}
+                  >
+                    <option value="일반">일반</option>
+                    <option value="질문">질문</option>
+                    <option value="팁/노하우">팁/노하우</option>
+                    <option value="작품공유">작품공유</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>내용</label>
+                  <textarea 
+                    value={newPost.content} 
+                    onChange={e => setNewPost({...newPost, content: e.target.value})} 
+                    required 
+                    placeholder="내용을 입력하세요"
+                    rows="5"
+                  ></textarea>
+                </div>
+                <button type="submit" className="cta" style={{ width: '100%', marginTop: '1rem' }} disabled={isSubmitting}>
+                  {isSubmitting ? "전송 중..." : "등록하기"}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
 
         <section id="reviews" style={{ padding: '6rem 10%', background: 'rgba(0, 180, 216, 0.02)' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
