@@ -282,27 +282,14 @@ const App = () => {
           </div>
         </section>
 
-        <section id="qa" style={{ padding: '4rem 10%' }}>
-          <h2 style={{ textAlign: 'center', fontFamily: 'var(--font-display)' }}>Student Q&A</h2>
-          <div className="curriculum-grid" style={{ paddingTop: '2rem' }}>
-            <div className="glass-card">
-              <h4>기술적 문제</h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>아두이노 연결, 코드 에러 등 기술적 질문</p>
-            </div>
-            <div className="glass-card">
-              <h4>디자인 질문</h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>의상 디자인과 기술 연계 방법론 질문</p>
-            </div>
-            <div className="glass-card">
-              <h4>기타 문의</h4>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>교육 과정 및 기타 일반 문의</p>
-            </div>
-          </div>
-          
-          {/* Real-time Community Board */}
-          <div className="board-container" style={{ marginTop: '4rem' }}>
+        <section id="community" style={{ padding: '6rem 10%', background: 'rgba(255, 255, 255, 0.01)' }}>
+          <div className="board-container">
             <div className="board-header">
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem' }}>Community Board</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <span className="day-badge" style={{ width: 'fit-content' }}>Live Space</span>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem' }}>Community Board</h2>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>기술적 질문부터 디자인 영감까지, 함께 성장하는 실시간 소통 공간입니다.</p>
+              </div>
               <button className="cta" onClick={() => setIsBoardModalOpen(true)}>글쓰기</button>
             </div>
 
