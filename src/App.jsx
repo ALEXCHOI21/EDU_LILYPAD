@@ -198,11 +198,7 @@ const App = () => {
     setIsChatLoading(true);
 
     try {
-      const response = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'chat', question: chatInput })
-      });
+      const response = await fetch(`${SCRIPT_URL}?q=${encodeURIComponent(chatInput)}`);
       const data = await response.json();
       setChatMessages(prev => [...prev, { role: 'bot', text: data.reply }]);
     } catch (error) {
